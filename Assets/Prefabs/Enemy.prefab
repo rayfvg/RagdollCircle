@@ -26,14 +26,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5516128822022065911}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1354542640623971675}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &6679268878485087807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +161,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1bc96a0f2b4aece42b7ee05d8d3faed7, type: 3}
       insertIndex: 2
       addedObject: {fileID: 3399068629886752435}
+    - targetCorrespondingSourceObject: {fileID: 3256684802130647663, guid: 1bc96a0f2b4aece42b7ee05d8d3faed7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 329219383682897144}
     - targetCorrespondingSourceObject: {fileID: 3256684802130647663, guid: 1bc96a0f2b4aece42b7ee05d8d3faed7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7835930091690381139}
@@ -1137,6 +1140,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3256684802130647663, guid: 1bc96a0f2b4aece42b7ee05d8d3faed7, type: 3}
   m_PrefabInstance: {fileID: 1533181174212430512}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &329219383682897144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4068128929130909919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 936b177d4663584449b3f05d1304524f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &7835930091690381139
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1162,7 +1177,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!65 &5399002298523868444
 BoxCollider:

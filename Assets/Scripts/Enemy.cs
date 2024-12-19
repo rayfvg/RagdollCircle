@@ -12,13 +12,6 @@ public class Enemy : MonoBehaviour
         _ragdollHandler.Initialize();
     }
 
-
-    public void Kill()
-    {
-        _view.DisableAnimator();
-        _ragdollHandler.Enable();
-    }
-
     public void TakeDamage(Vector3 force, Vector3 hitPoint)
     {
         Debug.Log("Hit");
