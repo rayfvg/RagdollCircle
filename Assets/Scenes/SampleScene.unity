@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.43718514, g: 0.4849226, b: 0.5651908, a: 1}
+  m_IndirectSpecularColor: {r: 0.43718594, g: 0.48492324, b: 0.5651919, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1339,9 +1339,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Score: 0
+  _scoreRectTransform: {fileID: 855463058}
   _scoreText: {fileID: 1103872153}
   _scoreValue: {fileID: 855463057}
   _incrementDuration: 1
+  _baseShakeStrength: 10
+  _shakeVibrato: 10
 --- !u!1 &878693828
 GameObject:
   m_ObjectHideFlags: 0
@@ -1622,7 +1625,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: -0.00012207031, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1103872153
