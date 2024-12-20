@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class Hummer : MonoBehaviour
 {
-    [SerializeField] private float _forse;
+    [SerializeField] private HummerStrike _hummerStrike;
+
     private void OnCollisionEnter(Collision collision)
     {
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
@@ -13,8 +15,14 @@ public class Hummer : MonoBehaviour
 
             Vector3 contactPoint = collision.contacts[0].point;
  
-
-            enemy.TakeDamage(forceDirection * _forse, contactPoint);
+            enemy.TakeDamage(forceDirection * _hummerStrike.CurrentPower, contactPoint);
+            StartCoroutine(DelayForDisableCollider());
         }
+    }
+
+    private IEnumerator DelayForDisableCollider()
+    {
+        yield return new WaitForSeconds(1);
+        GetComponent<Collider>().enabled = false;
     }
 }

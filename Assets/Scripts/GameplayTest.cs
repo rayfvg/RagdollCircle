@@ -9,11 +9,9 @@ public class GameplayTest : MonoBehaviour
     [SerializeField] private Transform _spawnPoint;
 
     [SerializeField] public Hummer _hummer;
-    [SerializeField] private HummerView _view;
 
     [SerializeField] private CameraFindPLayer _cameraFindPlayer;
-
-    [SerializeField] private Button _hitButton;
+    [SerializeField] private WalletScore _wallet;
 
     private void Awake()
     {
@@ -21,30 +19,18 @@ public class GameplayTest : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            _view.StartHitView();
-        }
         if (Input.GetKeyDown(KeyCode.R))
         {
             Restart();
-            _view.SwitchIdleView();
         }
-    }
-
-    private void OnEnable()
-    {
-        _hitButton.onClick.AddListener(AttackHummer);
-    }
-    private void OnDisable()
-    {
-        _hitButton.onClick.RemoveListener(AttackHummer);
     }
 
     public void Restart()
     {
         Destroy(_enemy.gameObject);
         Initialize();
+        _hummer.GetComponent<Collider>().enabled = true;
+        _wallet.ResetScore();
     }
     
     private void Initialize()
@@ -53,6 +39,4 @@ public class GameplayTest : MonoBehaviour
         _enemyTarget = _enemy.GetComponentInChildren<CameraTarget>();
         _cameraFindPlayer.Initialize(_enemyTarget);
     }
-
-    private void AttackHummer() => _view.StartHitView();
 }
