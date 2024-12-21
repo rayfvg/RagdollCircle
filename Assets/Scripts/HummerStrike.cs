@@ -1,22 +1,45 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class HummerStrike : MonoBehaviour
 {
-    [SerializeField] private Button _strikeButton;
     [SerializeField] private float _maxPower;  // Максимальная сила удара
     [SerializeField] private float _chargeSpeed = 2f; // Скорость роста/спада силы удара
 
-    [SerializeField] private Hummer _hummer;
-    [SerializeField] private HummerView _hummerView;
     [SerializeField] private Image _powerBar;
+    [SerializeField] private Button _hitButton;
+
+    private HummerView _hummerView;
 
     private bool _isCharging;
     private float _currentChargeTime;
     public float CurrentPower;
 
+    private void Start()
+    {
+        _hummerView = GetComponentInParent<HummerView>(); 
+    }
+
+    private void OnEnable()
+    {
+        _hitButton.onClick.AddListener(OnButtonReleased);
+
+        EventTrigger eventTrigger = _hitButton.GetComponent<EventTrigger>();
+        if (eventTrigger == null)
+            eventTrigger = _hitButton.gameObject.AddComponent<EventTrigger>();
+
+        EventTrigger.Entry entry = new EventTrigger.Entry
+        {
+            eventID = EventTriggerType.PointerDown
+        };
+        entry.callback.AddListener((eventData) => { OnButtonPressed(); });
+
+        eventTrigger.triggers.Add(entry);
+    }
     private void Update()
     {
         if (_isCharging)
@@ -52,4 +75,5 @@ public class HummerStrike : MonoBehaviour
     {
         _hummerView.StartHitView();
     }
+
 }

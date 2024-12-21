@@ -7,14 +7,12 @@ using DG.Tweening;
 public class WalletScore : MonoBehaviour
 {
     public int Score;
-    [SerializeField] RectTransform _scoreRectTransform;
-
-    [SerializeField] private TMP_Text _scoreText;
-    [SerializeField] private GameObject _scoreValue;
-
     [SerializeField] private float _incrementDuration = 1f; // Длительность накопления очков
     [SerializeField] private float _baseShakeStrength = 10f; // Базовая сила тряски
     [SerializeField] private int _shakeVibrato = 10; // Количество колебаний во время тряски
+
+    [SerializeField]  RectTransform _scoreRectTransform;
+    [SerializeField]  private TMP_Text _scoreText;
 
     private Coroutine _currentCoroutine;
     private Vector2 _initialPosition;
