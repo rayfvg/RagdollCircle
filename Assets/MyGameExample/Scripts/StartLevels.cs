@@ -19,7 +19,7 @@ public class StartLevels : MonoBehaviour
 
     private void Awake()
     {
-        _scoreCurrentLvl = PlayerPrefs.GetInt("_id");
+        _scoreCurrentLvl = PlayerPrefs.GetInt(_id.ToString());
         _currentScore.text = _scoreCurrentLvl.ToString();
 
         _buttonStartLvl = GetComponent<Button>();
@@ -39,7 +39,7 @@ public class StartLevels : MonoBehaviour
 
     public void TryUpdateValueScore()
     {
-        _scoreCurrentLvl = PlayerPrefs.GetInt("_id");
+        _scoreCurrentLvl = PlayerPrefs.GetInt(_id.ToString());
         _currentScore.text = _scoreCurrentLvl.ToString();
         UpdateStarsForMenu();
     }

@@ -62,9 +62,9 @@ public class FinishPlatform : MonoBehaviour
 
     private IEnumerator PatricleActive()
     {
-        int oldScore = PlayerPrefs.GetInt("_id");
+        int oldScore = PlayerPrefs.GetInt(_id.ToString());
         if (oldScore < _walletScore.Score)
-            PlayerPrefs.SetInt("_id", _walletScore.Score);
+            PlayerPrefs.SetInt(_id.ToString(), _walletScore.Score);
 
         foreach (var particle in _particles)
             particle.Play();
