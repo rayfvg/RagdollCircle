@@ -11,6 +11,8 @@ public class FinishPlatform : MonoBehaviour
     [SerializeField] private GameObject _finishUi;
     [SerializeField] private GameObject _gameplayUI;
 
+    [SerializeField] private GameObject _LoserTableUI;
+
     [SerializeField] private WalletScore _walletScore;
 
     [SerializeField] private TMP_Text _conteinerScore;
@@ -22,6 +24,7 @@ public class FinishPlatform : MonoBehaviour
     [SerializeField] private GameObject _mainMenu;
 
     [SerializeField] private Button _backinMenu;
+    [SerializeField] private Button _mainMenuButton;
 
     public int ScoreFor1Starr;
     public int ScoreFor2Starr;
@@ -33,7 +36,7 @@ public class FinishPlatform : MonoBehaviour
 
     public bool _isFinished = false;
 
-
+    private Coroutine _currentCoroutine;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -47,29 +50,37 @@ public class FinishPlatform : MonoBehaviour
     {
         _finishButton.onClick.AddListener(RetunrToMenuAfterWin);
         _backinMenu.onClick.AddListener(backToMenuAfterLose);
+        _mainMenuButton.onClick.AddListener(backToMenuAfterLose);
     }
     private void OnDisable()
     {
         _finishButton.onClick.RemoveListener(RetunrToMenuAfterWin);
         _backinMenu.onClick.RemoveListener(backToMenuAfterLose);
+        _mainMenuButton.onClick.RemoveListener(backToMenuAfterLose);
     }
 
     private void FinishTable()
     {
         _isFinished = true;
-        StartCoroutine(PatricleActive());
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+        }
+
+        _currentCoroutine = StartCoroutine(PatricleActive());
     }
 
     private IEnumerator PatricleActive()
     {
-        int oldScore = PlayerPrefs.GetInt(_id.ToString());
-        if (oldScore < _walletScore.Score)
-            PlayerPrefs.SetInt(_id.ToString(), _walletScore.Score);
-
         foreach (var particle in _particles)
             particle.Play();
 
         yield return new WaitForSeconds(1.5f);
+
+        int oldScore = PlayerPrefs.GetInt(_id.ToString());
+        if (oldScore < _walletScore.Score)
+            PlayerPrefs.SetInt(_id.ToString(), _walletScore.Score);
+
         Enemy enemy = FindObjectOfType<Enemy>();
         Destroy(enemy.gameObject);
         _isFinished = false;
@@ -78,12 +89,26 @@ public class FinishPlatform : MonoBehaviour
 
         _gameplayUI.SetActive(false);
         _conteinerScore.text = _walletScore.Score.ToString();
+
+        _currentCoroutine = null; // Очистка ссылки после завершения
+    }
+
+    public void ResetInFinishPlase()
+    {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
+        _isFinished = false;
     }
 
     private void RetunrToMenuAfterWin()
     {
+        _isFinished = false;
         _currentLvl.SetActive(false);
         _mainMenu.SetActive(true);
+        _finishUi.SetActive(false);
         _startLevels.TryUpdateValueScore();
         ResetStars();
     }
@@ -91,9 +116,15 @@ public class FinishPlatform : MonoBehaviour
     private void backToMenuAfterLose()
     {
         Enemy enemy = FindObjectOfType<Enemy>();
-        Destroy(enemy.gameObject);
+        if (enemy != null)
+            Destroy(enemy.gameObject);
+
+        _isFinished = false;
         _currentLvl.SetActive(false);
+        _LoserTableUI.SetActive(false);
         _mainMenu.SetActive(true);
+        _gameplayUI.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     private void AwardStarts()

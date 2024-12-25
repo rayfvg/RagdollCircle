@@ -1,0 +1,2 @@
+Build path: G:/gamedef/RagdollCircle/Builder/1
+Build number: 1

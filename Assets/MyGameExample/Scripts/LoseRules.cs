@@ -10,12 +10,12 @@ public class LoseRules : MonoBehaviour
     private Rigidbody _rigidbody;
 
     private bool _isMoving = false;
-  
+    private bool _isChecking = false;
 
     private void OnEnable()
     {
         _isMoving = false;
-        
+        _isChecking = false;
     }
 
     public void InitLoseRules(Enemy enemy)
@@ -27,14 +27,11 @@ public class LoseRules : MonoBehaviour
 
     private void Update()
     {
-        if (_rigidbody != null && _finishPlatform._isFinished == false)
+        if (_rigidbody != null && !_finishPlatform._isFinished)
         {
-            if (_isMoving && _rigidbody.velocity.magnitude < 0.1f)
+            if (!_isChecking && _isMoving && _rigidbody.velocity.magnitude < 0.1f)
             {
-                Debug.Log("Lose");
-                _loseTable.SetActive(true);
-                Destroy(_enemy.gameObject);
-                _isMoving = false; // Останавливаем проверку после поражения
+                StartCoroutine(CheckLoseCondition());
             }
 
             if (!_isMoving && _rigidbody.velocity.magnitude > 0.5f)
@@ -42,5 +39,30 @@ public class LoseRules : MonoBehaviour
                 _isMoving = true;
             }
         }
+    }
+
+    private System.Collections.IEnumerator CheckLoseCondition()
+    {
+        _isChecking = true;
+
+        // Ждём 1 секунду перед проверкой
+        yield return new WaitForSeconds(1f);
+
+        // Проверяем, остановился ли объект
+        if (_rigidbody.velocity.magnitude < 0.1f && _isMoving)
+        {
+            Debug.Log("Lose");
+            _loseTable.SetActive(true);
+            Destroy(_enemy.gameObject);
+            _isMoving = false;
+        }
+
+        _isChecking = false;
+    }
+
+    public void RulesUpdate()
+    {
+        _isMoving = false;
+        _isChecking = false;
     }
 }

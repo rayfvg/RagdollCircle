@@ -11,8 +11,8 @@ public class WalletScore : MonoBehaviour
     [SerializeField] private float _baseShakeStrength = 10f; // Базовая сила тряски
     [SerializeField] private int _shakeVibrato = 10; // Количество колебаний во время тряски
 
-    [SerializeField]  RectTransform _scoreRectTransform;
-    [SerializeField]  private TMP_Text _scoreText;
+    [SerializeField] RectTransform _scoreRectTransform;
+    [SerializeField] private TMP_Text _scoreText;
 
     private Coroutine _currentCoroutine;
     private Vector2 _initialPosition;
@@ -83,6 +83,9 @@ public class WalletScore : MonoBehaviour
 
     public void ResetScore()
     {
+        if (_currentCoroutine != null)
+            StopCoroutine(_currentCoroutine);
+
         Score = 0;
         _scoreText.text = Score.ToString();
     }

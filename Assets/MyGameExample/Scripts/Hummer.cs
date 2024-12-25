@@ -5,6 +5,9 @@ public class Hummer : MonoBehaviour
 {
     [SerializeField] private HummerStrike _hummerStrike;
     [SerializeField] private GameObject _locker;
+    [SerializeField] private GameObject _buttonsUi;
+
+    [SerializeField] private WalletScore _wallet;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -18,7 +21,13 @@ public class Hummer : MonoBehaviour
  
             enemy.TakeDamage(forceDirection * _hummerStrike.CurrentPower, contactPoint);
 
+            int newScoreY = Mathf.Abs((int)collision.relativeVelocity.y + 5 * 10);
+            int newScoreX = Mathf.Abs((int)collision.relativeVelocity.x + 5 * 10);
+            _wallet.AddScoreGradually(newScoreY + newScoreX);
+
+
             _locker.SetActive(true);
+            _buttonsUi.SetActive(false);
             StartCoroutine(DelayForDisableCollider());
         }
     }

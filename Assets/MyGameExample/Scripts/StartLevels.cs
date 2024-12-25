@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +28,7 @@ public class StartLevels : MonoBehaviour
         UpdateStarsForMenu();
     }
 
+    
     public void StartLevel()
     {
         _levelPrefab.SetActive(true);
@@ -34,7 +36,12 @@ public class StartLevels : MonoBehaviour
         _mainMenu.gameObject.SetActive(false);
     }
 
-    private void OnEnable() => _buttonStartLvl.onClick.AddListener(StartLevel);
+    private void OnEnable()
+    {
+        TryUpdateValueScore();
+
+        _buttonStartLvl.onClick.AddListener(StartLevel);
+    }
     private void OnDisable() => _buttonStartLvl.onClick.RemoveListener(StartLevel);
 
     public void TryUpdateValueScore()
