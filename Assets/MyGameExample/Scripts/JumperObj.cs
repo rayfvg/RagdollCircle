@@ -32,7 +32,8 @@ public class JumperObj : MonoBehaviour
 
     private void StartAnimation()
     {
-        _animator.SetTrigger("jump");
+        if (_animator != null)
+            _animator.SetTrigger("jump");
         _canAnimate = false;
         Invoke(nameof(ResetAnimationCooldown), _animationCooldown);
     }
