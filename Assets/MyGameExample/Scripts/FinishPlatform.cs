@@ -40,9 +40,10 @@ public class FinishPlatform : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision != null && _isFinished == false)
+        if (collision.collider.GetComponent<CameraTarget>() != null && _isFinished == false)
         {
             FinishTable();
+            Debug.Log("Fin");
         }
     }
 
