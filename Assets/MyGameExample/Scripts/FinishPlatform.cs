@@ -38,9 +38,18 @@ public class FinishPlatform : MonoBehaviour
 
     private Coroutine _currentCoroutine;
 
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.collider.GetComponent<CameraTarget>() != null && _isFinished == false)
+    //    {
+    //        FinishTable();
+    //        Debug.Log("Fin");
+    //    }
+    //}
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.GetComponent<CameraTarget>() != null && _isFinished == false)
+        if (other.GetComponent<CameraTarget>() != null && _isFinished == false)
         {
             FinishTable();
             Debug.Log("Fin");
