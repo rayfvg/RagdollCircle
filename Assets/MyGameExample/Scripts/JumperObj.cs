@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class JumperObj : MonoBehaviour
 {
+    public AudioSource JumpSound;
+
     [SerializeField] private float _forse;
     [SerializeField] private Vector3 _direction;
 
@@ -21,6 +23,7 @@ public class JumperObj : MonoBehaviour
         if (collision.gameObject.GetComponent<Rigidbody>() != null)
         {
             collision.gameObject.GetComponent<Rigidbody>().AddForce(_direction * _forse, ForceMode.Impulse);
+
             if (_canAnimate)
                 StartAnimation();
 
@@ -32,6 +35,7 @@ public class JumperObj : MonoBehaviour
 
     private void StartAnimation()
     {
+        JumpSound.Play();
         if (_animator != null)
             _animator.SetTrigger("jump");
         _canAnimate = false;

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class FinishPlatform : MonoBehaviour
 {
+    public AudioSource FinishSound;
+
     [SerializeField] private ParticleSystem[] _particles;
     [SerializeField] private GameObject _finishUi;
     [SerializeField] private GameObject _gameplayUI;
@@ -53,6 +55,7 @@ public class FinishPlatform : MonoBehaviour
         {
             FinishTable();
             Debug.Log("Fin");
+
         }
     }
 
@@ -71,6 +74,7 @@ public class FinishPlatform : MonoBehaviour
 
     private void FinishTable()
     {
+        FinishSound.Play();
         _isFinished = true;
         if (_currentCoroutine != null)
         {

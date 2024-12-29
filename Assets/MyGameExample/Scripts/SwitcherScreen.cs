@@ -25,12 +25,14 @@ public class SwitcherScreen : MonoBehaviour
     {
         _menuInGameplay.SetActive(true);  // Показываем меню
         Time.timeScale = 0f;          // Останавливаем игровой процесс
+        AudioListener.pause = true;
     }
 
     public void ResumeGame()
     {
         _menuInGameplay.SetActive(false); // Скрываем меню
         Time.timeScale = 1f;           // Возобновляем игровой процесс
+        AudioListener.pause = false;
     }
 
     public void SwitcherSkinOpen()

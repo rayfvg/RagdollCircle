@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BounserUp : MonoBehaviour
 {
+
     [SerializeField] private float _forse;
     [SerializeField] private Vector3 _direction;
 

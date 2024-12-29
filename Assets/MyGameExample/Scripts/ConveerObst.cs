@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class ConveerObst : MonoBehaviour
 {
+    public AudioSource _conveerSound;
+
     [SerializeField] private float _forse;
     [SerializeField] private Vector3 _direction;
 
@@ -21,6 +23,9 @@ public class ConveerObst : MonoBehaviour
             int newScoreY = Mathf.Abs((int)collision.relativeVelocity.y * 10);
             int newScoreX = Mathf.Abs((int)collision.relativeVelocity.x * 10);
             _wallet.AddScoreGradually(newScoreY + newScoreX);
+
+            if (_conveerSound.isPlaying == false)
+                _conveerSound.Play();
         }
     }
 

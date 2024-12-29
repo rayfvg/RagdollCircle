@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class LoseRules : MonoBehaviour
 {
+    public AudioSource FailSound;
+
     [SerializeField] private FinishPlatform _finishPlatform;
 
     [SerializeField] private GameObject _loseTable;
@@ -51,6 +53,7 @@ public class LoseRules : MonoBehaviour
         // Проверяем, остановился ли объект
         if (_rigidbody.velocity.magnitude < 0.1f && _isMoving)
         {
+            FailSound.Play();
             Debug.Log("Lose");
             _loseTable.SetActive(true);
             Destroy(_enemy.gameObject);

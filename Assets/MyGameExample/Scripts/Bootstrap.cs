@@ -1,9 +1,12 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class Bootstrap : MonoBehaviour
 {
+    [SerializeField] private AudioSource[] _music;
+
     [SerializeField] private Enemy[] _enemyPrefabs;
     [SerializeField] private Transform _spawnPoint;
 
@@ -54,12 +57,25 @@ public class Bootstrap : MonoBehaviour
     {
         _restartButton.onClick.RemoveListener(Restart);
         _resetInMenuButton.onClick.RemoveListener(Restart);
+
+        foreach (var item in _music)
+        {
+            if(item != null)
+            item.Stop();
+        }
+        
     } 
 
     public void Restart()
     {
         if (_enemy != null)
             Destroy(_enemy.gameObject);
+
+        foreach (var item in _music)
+        {
+            if (item != null)
+                item.Stop();
+        }
 
         _finishPlatform.ResetInFinishPlase();
 
@@ -89,6 +105,9 @@ public class Bootstrap : MonoBehaviour
         _buttonsUI.SetActive(true);
         _menuIngameplayUI.SetActive(false);
         _hitButton.fillAmount = 1;
+
+        int i = Random.Range(0, 2);
+        _music[i].Play();
     }
 
     private Enemy SelectedEnemy()
