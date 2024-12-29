@@ -55,6 +55,9 @@ public class LoseRules : MonoBehaviour
         {
             FailSound.Play();
             Debug.Log("Lose");
+
+            Time.timeScale = 0;
+
             _loseTable.SetActive(true);
             Destroy(_enemy.gameObject);
             _isMoving = false;
