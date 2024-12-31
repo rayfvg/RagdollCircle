@@ -7,7 +7,6 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Sources")]
     public AudioSource musicSource; // Источник фоновой музыки
-    public AudioSource musicSource1; // Источник фоновой музыки
     public AudioSource[] soundSources; // Источники для звуков
 
     [Header("Settings")]
@@ -29,13 +28,22 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            StopAllSouds();
+        }
+        else
+        {
+            PlayAllSounds();
+        }
+    }
 
     public void ToggleMusic(bool isEnabled)
     {
         isMusicEnabled = isEnabled;
         musicSource.mute = !isMusicEnabled; // Выключаем звук у источника
-        musicSource1.mute = !isMusicEnabled;
     }
 
     public void ToggleSounds(bool isEnabled)
@@ -45,8 +53,6 @@ public class AudioManager : MonoBehaviour
         {
             source.mute = !areSoundsEnabled; // Выключаем звук у каждого источника
         }
-
-      
     }
 
     public void PlaySound(AudioClip clip)
@@ -62,6 +68,24 @@ public class AudioManager : MonoBehaviour
                 source.Play();
                 return;
             }
+        }
+    }
+
+    public void StopAllSouds()
+    {
+        musicSource.Pause();
+        foreach (var item in soundSources)
+        {
+            item.Pause();
+        }
+    }
+
+    public void PlayAllSounds()
+    {
+        musicSource.UnPause();
+        foreach (var item in soundSources)
+        {
+            item.UnPause();
         }
     }
 }

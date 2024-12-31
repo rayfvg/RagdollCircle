@@ -1,11 +1,11 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class Bootstrap : MonoBehaviour
 {
-    [SerializeField] private AudioSource[] _music;
+    [SerializeField] private AudioSource _music;
+    [SerializeField] private AudioSource[] _sounds;
 
     [SerializeField] private Enemy[] _enemyPrefabs;
     [SerializeField] private Transform _spawnPoint;
@@ -40,45 +40,35 @@ public class Bootstrap : MonoBehaviour
     //}
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Restart();
-        }
-    }
+
 
     private void OnEnable()
     {
         _restartButton.onClick.AddListener(Restart);
         _resetInMenuButton.onClick.AddListener(Restart);
-    }  
+
+        AudioListener.pause = false;
+        _music.Play();
+    }
     private void OnDisable()
     {
         _restartButton.onClick.RemoveListener(Restart);
         _resetInMenuButton.onClick.RemoveListener(Restart);
 
-        foreach (var item in _music)
+        _music.Stop();
+        foreach (var item in _sounds)
         {
-            if(item != null)
             item.Stop();
         }
-        
-    } 
+    }
 
     public void Restart()
     {
         if (_enemy != null)
             Destroy(_enemy.gameObject);
 
-        foreach (var item in _music)
-        {
-            if (item != null)
-                item.Stop();
-        }
-
         _finishPlatform.ResetInFinishPlase();
-
+        AudioListener.pause = false;
         Initialize();
     }
 
@@ -105,9 +95,6 @@ public class Bootstrap : MonoBehaviour
         _buttonsUI.SetActive(true);
         _menuIngameplayUI.SetActive(false);
         _hitButton.fillAmount = 1;
-
-        int i = Random.Range(0, 2);
-        _music[i].Play();
     }
 
     private Enemy SelectedEnemy()
@@ -115,10 +102,10 @@ public class Bootstrap : MonoBehaviour
         if (PlayerPrefs.GetInt("Bloomselect") == 1)
             return _enemyPrefabs[0];
 
-        if(PlayerPrefs.GetInt("Thavelselect") == 1)
+        if (PlayerPrefs.GetInt("Thavelselect") == 1)
             return _enemyPrefabs[1];
 
-        if(PlayerPrefs.GetInt("Circleselect") == 1)
+        if (PlayerPrefs.GetInt("Circleselect") == 1)
             return _enemyPrefabs[2];
 
         return _enemyPrefabs[0];

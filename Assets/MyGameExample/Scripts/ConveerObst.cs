@@ -11,6 +11,8 @@ public class ConveerObst : MonoBehaviour
     [SerializeField] private WalletScore _wallet;
     [SerializeField] private float _speed;
 
+    private float _lastSoundTime = 0f; // Последнее время воспроизведения звука
+    private float _soundCooldown = 0.5f;
 
     private float value = 0;
 
@@ -24,8 +26,11 @@ public class ConveerObst : MonoBehaviour
             int newScoreX = Mathf.Abs((int)collision.relativeVelocity.x * 10);
             _wallet.AddScoreGradually(newScoreY + newScoreX);
 
-            if (_conveerSound.isPlaying == false)
+            if (!_conveerSound.isPlaying && Time.time - _lastSoundTime >= _soundCooldown)
+            {
                 _conveerSound.Play();
+                _lastSoundTime = Time.time; // Обновление времени последнего воспроизведения
+            }
         }
     }
 
